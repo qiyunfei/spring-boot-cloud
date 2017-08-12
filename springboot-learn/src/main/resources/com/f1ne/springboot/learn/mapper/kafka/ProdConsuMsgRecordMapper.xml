@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f1ne.springboot.learn.mapper.kafka.ProdConsuMsgRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="record_topic" property="recordTopic" jdbcType="VARCHAR" />
+    <result column="record_key" property="recordKey" jdbcType="VARCHAR" />
+    <result column="record_offset" property="recordOffset" jdbcType="BIGINT" />
+    <result column="record_timestamp" property="recordTimestamp" jdbcType="BIGINT" />
+    <result column="record_partition" property="recordPartition" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" extends="BaseResultMap" >
+    <result column="record_value" property="recordValue" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, record_topic, record_key, record_offset, record_timestamp, record_partition, create_time, 
+    status,update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    record_value
+  </sql>
+  <select id="selectById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from prod_consu_msg_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    insert into prod_consu_msg_record (id, type, record_topic, 
+      record_key, record_offset, record_timestamp,record_partition, status, record_value,update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, #{recordTopic,jdbcType=VARCHAR}, 
+      #{recordKey,jdbcType=VARCHAR}, #{recordOffset,jdbcType=BIGINT}, #{recordTimestamp,jdbcType=BIGINT}, #{recordPartition,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{recordValue,jdbcType=LONGVARCHAR},#{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    insert into prod_consu_msg_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="recordTopic != null" >
+        record_topic,
+      </if>
+      <if test="recordKey != null" >
+        record_key,
+      </if>
+      <if test="recordOffset != null" >
+        record_offset,
+      </if>
+        <if test="recordTimestamp != null" >
+        record_timestamp,
+      </if>
+      <if test="recordPartition != null" >
+        record_partition,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="recordValue != null" >
+        record_value,
+      </if>
+        <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="recordTopic != null" >
+        #{recordTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="recordKey != null" >
+        #{recordKey,jdbcType=VARCHAR},
+      </if>
+      <if test="recordOffset != null" >
+        #{recordOffset,jdbcType=BIGINT},
+      </if>
+      <if test="recordTimestamp != null" >
+        #{recordTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="recordPartition != null" >
+        #{recordPartition,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recordValue != null" >
+        #{recordValue,jdbcType=LONGVARCHAR},
+      </if>
+       <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByIdSelective" parameterType="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    update prod_consu_msg_record
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="recordTopic != null" >
+        record_topic = #{recordTopic,jdbcType=VARCHAR},
+      </if>
+      <if test="recordKey != null" >
+        record_key = #{recordKey,jdbcType=VARCHAR},
+      </if>
+      <if test="recordOffset != null" >
+        record_offset = #{recordOffset,jdbcType=BIGINT},
+      </if>
+       <if test="recordTimestamp != null" >
+        record_timestamp = #{recordTimestamp,jdbcType=BIGINT},
+      </if>
+      <if test="recordPartition != null" >
+        record_partition = #{recordPartition,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="recordValue != null" >
+        record_value = #{recordValue,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByIdWithBLOBs" parameterType="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    update prod_consu_msg_record
+    set type = #{type,jdbcType=INTEGER},
+      record_topic = #{recordTopic,jdbcType=VARCHAR},
+      record_key = #{recordKey,jdbcType=VARCHAR},
+      record_offset = #{recordOffset,jdbcType=BIGINT},
+      record_timestamp = #{recordTimestamp,jdbcType=BIGINT},
+      record_partition = #{recordPartition,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      record_value = #{recordValue,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateById" parameterType="com.f1ne.springboot.learn.domain.kafka.TblProdConsuMsgRecord" >
+    update prod_consu_msg_record
+    set type = #{type,jdbcType=INTEGER},
+      record_topic = #{recordTopic,jdbcType=VARCHAR},
+      record_key = #{recordKey,jdbcType=VARCHAR},
+      record_offset = #{recordOffset,jdbcType=BIGINT},
+      record_timestamp = #{recordTimestamp,jdbcType=BIGINT},
+      record_partition = #{recordPartition,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryByStatusAndType" resultMap="ResultMapWithBLOBs" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from prod_consu_msg_record
+    where status = #{status,jdbcType=INTEGER}
+    and type = #{type,jdbcType=INTEGER}
+  </select>
+  
+	<insert id="batchUpdateList" parameterType="java.util.List">
+		insert into prod_consu_msg_record (id, type, record_topic,
+		record_key, record_offset, record_timestamp,record_partition,
+		create_time, status, record_value
+		)
+		values
+		<foreach collection="list" item="obj" index="index" separator=",">
+			(#{obj.id,jdbcType=BIGINT}, #{obj.type,jdbcType=INTEGER},
+			#{obj.recordTopic,jdbcType=VARCHAR},
+			#{obj.recordKey,jdbcType=VARCHAR},
+			#{obj.recordOffset,jdbcType=BIGINT},
+			#{obj.recordTimestamp,jdbcType=BIGINT},
+			#{obj.recordPartition,jdbcType=INTEGER},
+			#{obj.createTime,jdbcType=TIMESTAMP}, #{obj.status,jdbcType=INTEGER},
+			#{obj.recordValue,jdbcType=LONGVARCHAR}
+			)
+		</foreach>
+		on duplicate key update
+		id = values(id),
+		type = values(type),
+		record_topic = values(record_topic),
+		record_key = values(record_key),
+		record_offset = values(record_offset),
+		record_timestamp = values(record_timestamp),
+		record_partition = values(record_partition),
+		create_time = values(create_time),
+		status = values(status),
+		record_value = values(record_value)
+	</insert>
+</mapper>
